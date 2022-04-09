@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace EAD_CA_PROJECT_INVEST.Model
 {
@@ -11,8 +12,10 @@ namespace EAD_CA_PROJECT_INVEST.Model
         [Required(ErrorMessage = "Stock Ticker is required")]
         public string StockTicker { get; set;}
         [Required(ErrorMessage = "Stock Price is required")]
+        [DisplayName("Price (€)")]
         public float StockPrice { get; set;}
         [Required(ErrorMessage = "Sell Price is required")]
+        [DisplayName("Price (€)")]
         public float SellPrice { get; set;}
         [Required(ErrorMessage = "Total Shares is required")]
         public float TotalShares { get; set;}
