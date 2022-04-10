@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:EAD_CA_PROJECT_INVESTContext"
+    }
+  }
+}
