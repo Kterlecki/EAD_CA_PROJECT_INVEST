@@ -2,7 +2,13 @@
 
 namespace EAD_CA_PROJECT_INVEST.Model
 {
-    public enum UserType { basic,admin }
+    public enum UserType 
+    { 
+        [Display(Name ="Basic user")]
+        basic,
+        [Display(Name = "Admin user")]
+        admin 
+    }
     public class User
     {
         [Key]
