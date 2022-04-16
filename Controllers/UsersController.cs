@@ -12,9 +12,9 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly EAD_CA_PROJECT_INVESTContext _context;
+        private readonly INVESTContext _context;
 
-        public UsersController(EAD_CA_PROJECT_INVESTContext context)
+        public UsersController(INVESTContext context)
         {
             _context = context;
             _context.Database.EnsureCreated();
