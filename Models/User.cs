@@ -20,5 +20,10 @@ namespace EAD_CA_PROJECT_INVEST.Model
         [EmailAddress]
         [Required(ErrorMessage ="Email required")]
         public  string Email { get; set; }
+
+
+        // navigation properties
+
+        public virtual List<Order> Order { get; set; }
     }
 }

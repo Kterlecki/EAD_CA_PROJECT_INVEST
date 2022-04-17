@@ -15,5 +15,9 @@ namespace EAD_CA_PROJECT_INVEST.Data
         }
 
         public DbSet<EAD_CA_PROJECT_INVEST.Model.User> User { get; set; }
+
+        public DbSet<EAD_CA_PROJECT_INVEST.Model.Stock> Stock { get; set; }
+
+        public DbSet<EAD_CA_PROJECT_INVEST.Model.Order> Order { get; set; }
     }
 }
