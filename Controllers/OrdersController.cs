@@ -22,7 +22,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var iNVESTContext = _context.Order.Include(o => o.User);
+            var iNVESTContext = _context.Order.Include(o => o.Stock).Include(o => o.User);
             return View(await iNVESTContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
             }
 
             var order = await _context.Order
+                .Include(o => o.Stock)
                 .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderID == id);
             if (order == null)
@@ -48,7 +49,8 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Email");
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockID");
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Email");
             return View();
         }
 
@@ -57,7 +59,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderID,PurchasePrice,UserID")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderID,PurchasePrice,StockID,UserID")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +67,8 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Email", order.UserID);
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockID", order.StockID);
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Email", order.UserID);
             return View(order);
         }
 
@@ -82,7 +85,8 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Email", order.UserID);
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockID", order.StockID);
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Email", order.UserID);
             return View(order);
         }
 
@@ -91,7 +95,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderID,PurchasePrice,UserID")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderID,PurchasePrice,StockID,UserID")] Order order)
         {
             if (id != order.OrderID)
             {
@@ -118,7 +122,8 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Email", order.UserID);
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockID", order.StockID);
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Email", order.UserID);
             return View(order);
         }
 
@@ -131,6 +136,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
             }
 
             var order = await _context.Order
+                .Include(o => o.Stock)
                 .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderID == id);
             if (order == null)

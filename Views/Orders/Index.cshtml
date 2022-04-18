@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.PurchasePrice)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.User)
             </th>
             <th></th>
@@ -26,6 +29,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PurchasePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock.StockID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.Email)

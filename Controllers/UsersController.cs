@@ -35,7 +35,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
             }
 
             var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.UserID == id);
             if (user == null)
             {
                 return NotFound();
@@ -55,7 +55,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,UserType,Email")] User user)
+        public async Task<IActionResult> Create([Bind("UserID,Name,UserType,Email")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -87,9 +87,9 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserType,Email")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserID,Name,UserType,Email")] User user)
         {
-            if (id != user.Id)
+            if (id != user.UserID)
             {
                 return NotFound();
             }
@@ -103,7 +103,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!UserExists(user.UserID))
                     {
                         return NotFound();
                     }
@@ -126,7 +126,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
             }
 
             var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.UserID == id);
             if (user == null)
             {
                 return NotFound();
@@ -148,7 +148,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.User.Any(e => e.UserID == id);
         }
     }
 }

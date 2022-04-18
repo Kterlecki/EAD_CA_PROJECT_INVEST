@@ -30,9 +30,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.ExchangeName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -56,9 +53,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExchangeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Order.OrderID)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.StockID">Edit</a> |

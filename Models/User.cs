@@ -12,7 +12,7 @@ namespace EAD_CA_PROJECT_INVEST.Model
     public class User
     {
         [Key]
-        public int Id { get; set; }
+        public int UserID { get; set; }
         [Required(ErrorMessage ="Name field is required")]
         public string Name { get; set; }
         [Required(ErrorMessage ="User Type Required")]
@@ -24,6 +24,6 @@ namespace EAD_CA_PROJECT_INVEST.Model
 
         // navigation properties
 
-        public virtual List<Order> Order { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

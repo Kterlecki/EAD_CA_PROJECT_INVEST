@@ -24,8 +24,7 @@ namespace EAD_CA_PROJECT_INVEST.Model
 
         //navigation properties
 
-        public int OrderID { get; set;}
-        public virtual Order Order { get; set;}
+        public virtual ICollection<Order> Order { get; set; }
 
     }
 }

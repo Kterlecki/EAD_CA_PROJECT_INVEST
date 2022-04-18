@@ -3,6 +3,7 @@ using EAD_CA_PROJECT_INVEST.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EAD_CA_PROJECT_INVEST.Migrations
 {
     [DbContext(typeof(INVESTContext))]
-    partial class INVESTContextModelSnapshot : ModelSnapshot
+    [Migration("20220418190422_Test4")]
+    partial class Test4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,11 +82,11 @@ namespace EAD_CA_PROJECT_INVEST.Migrations
 
             modelBuilder.Entity("EAD_CA_PROJECT_INVEST.Model.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -97,7 +99,7 @@ namespace EAD_CA_PROJECT_INVEST.Migrations
                     b.Property<int>("UserType")
                         .HasColumnType("int");
 
-                    b.HasKey("UserID");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });

@@ -11,7 +11,8 @@ namespace EAD_CA_PROJECT_INVEST.Model
         public float PurchasePrice { get; set; }
         
         //navigation properties
-        public List<Stock> Stocks { get; set; }
+        public int StockID { get; set; }
+        public virtual Stock Stock { get; set; }
         
         public int UserID { get; set; }
         public virtual User User { get; set; }

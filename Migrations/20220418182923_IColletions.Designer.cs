@@ -3,6 +3,7 @@ using EAD_CA_PROJECT_INVEST.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EAD_CA_PROJECT_INVEST.Migrations
 {
     [DbContext(typeof(INVESTContext))]
-    partial class INVESTContextModelSnapshot : ModelSnapshot
+    [Migration("20220418182923_IColletions")]
+    partial class IColletions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,15 +34,10 @@ namespace EAD_CA_PROJECT_INVEST.Migrations
                     b.Property<float>("PurchasePrice")
                         .HasColumnType("real");
 
-                    b.Property<int>("StockID")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("OrderID");
-
-                    b.HasIndex("StockID");
 
                     b.HasIndex("UserID");
 
@@ -57,6 +54,9 @@ namespace EAD_CA_PROJECT_INVEST.Migrations
 
                     b.Property<string>("ExchangeName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderID")
+                        .HasColumnType("int");
 
                     b.Property<float>("SellPrice")
                         .HasColumnType("real");
@@ -75,16 +75,18 @@ namespace EAD_CA_PROJECT_INVEST.Migrations
 
                     b.HasKey("StockID");
 
+                    b.HasIndex("OrderID");
+
                     b.ToTable("Stock");
                 });
 
             modelBuilder.Entity("EAD_CA_PROJECT_INVEST.Model.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -97,33 +99,36 @@ namespace EAD_CA_PROJECT_INVEST.Migrations
                     b.Property<int>("UserType")
                         .HasColumnType("int");
 
-                    b.HasKey("UserID");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });
 
             modelBuilder.Entity("EAD_CA_PROJECT_INVEST.Model.Order", b =>
                 {
-                    b.HasOne("EAD_CA_PROJECT_INVEST.Model.Stock", "Stock")
-                        .WithMany("Order")
-                        .HasForeignKey("StockID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EAD_CA_PROJECT_INVEST.Model.User", "User")
                         .WithMany("Order")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Stock");
-
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("EAD_CA_PROJECT_INVEST.Model.Stock", b =>
                 {
+                    b.HasOne("EAD_CA_PROJECT_INVEST.Model.Order", "Order")
+                        .WithMany("Stocks")
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("EAD_CA_PROJECT_INVEST.Model.Order", b =>
+                {
+                    b.Navigation("Stocks");
                 });
 
             modelBuilder.Entity("EAD_CA_PROJECT_INVEST.Model.User", b =>

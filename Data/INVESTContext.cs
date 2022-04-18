@@ -13,6 +13,19 @@ namespace EAD_CA_PROJECT_INVEST.Data
             : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>()
+                .HasOne(u => u.User)
+                .WithMany(o=> o.Order)
+                .HasForeignKey(u => u.UserID);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(s => s.Stock)
+                .WithMany(o => o.Order)
+                .HasForeignKey(s => s.StockID);
+
+        }
 
         public DbSet<EAD_CA_PROJECT_INVEST.Model.User> User { get; set; }
 
