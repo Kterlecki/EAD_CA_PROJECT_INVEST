@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace EAD_CA_PROJECT_INVEST.Model
 {
@@ -12,10 +13,13 @@ namespace EAD_CA_PROJECT_INVEST.Model
     public class User
     {
         [Key]
+        [DisplayName("User ID")]
         public int UserID { get; set; }
         [Required(ErrorMessage ="Name field is required")]
+        [DisplayName("User Name")]
         public string Name { get; set; }
         [Required(ErrorMessage ="User Type Required")]
+        [DisplayName("User Type")]
         public UserType UserType { get; set; }
         [EmailAddress]
         [Required(ErrorMessage ="Email required")]
