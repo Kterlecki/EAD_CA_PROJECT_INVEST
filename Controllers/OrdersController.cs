@@ -49,8 +49,8 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockID");
-            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Email");
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockName");
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Name");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockID", order.StockID);
-            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Email", order.UserID);
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockName", order.StockID);
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Name", order.UserID);
             return View(order);
         }
 
@@ -85,8 +85,8 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
             {
                 return NotFound();
             }
-            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockID", order.StockID);
-            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Email", order.UserID);
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockName", order.StockID);
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Name", order.UserID);
             return View(order);
         }
 
@@ -122,8 +122,8 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockID", order.StockID);
-            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Email", order.UserID);
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockName", order.StockID);
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Name", order.UserID);
             return View(order);
         }
 
