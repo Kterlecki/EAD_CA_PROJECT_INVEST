@@ -15,7 +15,7 @@ namespace EAD_CA_PROJECT_INVEST.Model
         [DisplayName("Stock Ticker ")]
         public string StockTicker { get; set;}
         [Required(ErrorMessage = "Stock Price is required")]
-        [DisplayName("Stock Price (€)")]
+        [DisplayName("Purchase Price (€)")]
         public float StockPrice { get; set;}
         [Required(ErrorMessage = "Sell Price is required")]
         [DisplayName("Sell Price (€)")]
