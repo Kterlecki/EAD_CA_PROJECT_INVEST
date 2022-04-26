@@ -10,56 +10,23 @@ using EAD_CA_PROJECT_INVEST.Model;
 
 namespace EAD_CA_PROJECT_INVEST.Controllers
 {
-    public class UsersController : Controller
+    public class OrdersController : Controller
     {
         private readonly INVESTContext _context;
 
-        public UsersController(INVESTContext context)
+        public OrdersController(INVESTContext context)
         {
             _context = context;
-            _context.Database.EnsureCreated();
         }
 
-        // GET: Users
-        /*public async Task<IActionResult> Index()
+        // GET: Orders
+        public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
-        } */
-
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
-        {
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["EmailSortParm"] = sortOrder == "Email" ? "Email_desc" : "Email";
-            ViewData["CurrentFilter"] = searchString;
-
-            var users = from u in _context.User
-                           select u;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                users = users.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
-            }
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    users = users.OrderByDescending(u => u.Name);
-                    break;
-                case "Email":
-                    users = users.OrderBy(u => u.Email);
-                    break;
-                case "Email_desc":
-                    users = users.OrderByDescending(u => u.Email);
-                    break;
-                default:
-                    users = users.OrderBy(u => u.UserID);
-                    break;
-            }
-            return View(await users.AsNoTracking().ToListAsync());
+            var iNVESTContext = _context.Order.Include(o => o.Stock).Include(o => o.User);
+            return View(await iNVESTContext.ToListAsync());
         }
 
-
-        // GET: Users/Details/5
+        // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -67,39 +34,45 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (user == null)
+            var order = await _context.Order
+                .Include(o => o.Stock)
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(m => m.OrderID == id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(order);
         }
 
-        // GET: Users/Create
+        // GET: Orders/Create
         public IActionResult Create()
         {
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockName");
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Name");
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Orders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,Name,UserType,Email")] User user)
+        public async Task<IActionResult> Create([Bind("OrderID,PurchasePrice,StockID,UserID")] Order order)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockName", order.StockID);
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Name", order.UserID);
+            return View(order);
         }
 
-        // GET: Users/Edit/5
+        // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,22 +80,24 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var order = await _context.Order.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
-            return View(user);
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockName", order.StockID);
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Name", order.UserID);
+            return View(order);
         }
 
-        // POST: Users/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,Name,UserType,Email")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderID,PurchasePrice,StockID,UserID")] Order order)
         {
-            if (id != user.UserID)
+            if (id != order.OrderID)
             {
                 return NotFound();
             }
@@ -131,12 +106,12 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(order);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.UserID))
+                    if (!OrderExists(order.OrderID))
                     {
                         return NotFound();
                     }
@@ -147,10 +122,12 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            ViewData["StockID"] = new SelectList(_context.Stock, "StockID", "StockName", order.StockID);
+            ViewData["UserID"] = new SelectList(_context.User, "UserID", "Name", order.UserID);
+            return View(order);
         }
 
-        // GET: Users/Delete/5
+        // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -158,30 +135,32 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (user == null)
+            var order = await _context.Order
+                .Include(o => o.Stock)
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(m => m.OrderID == id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(order);
         }
 
-        // POST: Users/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            _context.User.Remove(user);
+            var order = await _context.Order.FindAsync(id);
+            _context.Order.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool OrderExists(int id)
         {
-            return _context.User.Any(e => e.UserID == id);
+            return _context.Order.Any(e => e.OrderID == id);
         }
     }
 }

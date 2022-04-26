@@ -10,56 +10,22 @@ using EAD_CA_PROJECT_INVEST.Model;
 
 namespace EAD_CA_PROJECT_INVEST.Controllers
 {
-    public class UsersController : Controller
+    public class StocksController : Controller
     {
         private readonly INVESTContext _context;
 
-        public UsersController(INVESTContext context)
+        public StocksController(INVESTContext context)
         {
             _context = context;
-            _context.Database.EnsureCreated();
         }
 
-        // GET: Users
-        /*public async Task<IActionResult> Index()
+        // GET: Stocks
+        public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
-        } */
-
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
-        {
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["EmailSortParm"] = sortOrder == "Email" ? "Email_desc" : "Email";
-            ViewData["CurrentFilter"] = searchString;
-
-            var users = from u in _context.User
-                           select u;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                users = users.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
-            }
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    users = users.OrderByDescending(u => u.Name);
-                    break;
-                case "Email":
-                    users = users.OrderBy(u => u.Email);
-                    break;
-                case "Email_desc":
-                    users = users.OrderByDescending(u => u.Email);
-                    break;
-                default:
-                    users = users.OrderBy(u => u.UserID);
-                    break;
-            }
-            return View(await users.AsNoTracking().ToListAsync());
+            return View(await _context.Stock.ToListAsync());
         }
 
-
-        // GET: Users/Details/5
+        // GET: Stocks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -67,39 +33,39 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (user == null)
+            var stock = await _context.Stock
+                .FirstOrDefaultAsync(m => m.StockID == id);
+            if (stock == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(stock);
         }
 
-        // GET: Users/Create
+        // GET: Stocks/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Stocks/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,Name,UserType,Email")] User user)
+        public async Task<IActionResult> Create([Bind("StockID,StockName,StockTicker,StockPrice,SellPrice,TotalShares,ExchangeName")] Stock stock)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(stock);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(stock);
         }
 
-        // GET: Users/Edit/5
+        // GET: Stocks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,22 +73,22 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var stock = await _context.Stock.FindAsync(id);
+            if (stock == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(stock);
         }
 
-        // POST: Users/Edit/5
+        // POST: Stocks/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,Name,UserType,Email")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("StockID,StockName,StockTicker,StockPrice,SellPrice,TotalShares,ExchangeName")] Stock stock)
         {
-            if (id != user.UserID)
+            if (id != stock.StockID)
             {
                 return NotFound();
             }
@@ -131,12 +97,12 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(stock);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.UserID))
+                    if (!StockExists(stock.StockID))
                     {
                         return NotFound();
                     }
@@ -147,10 +113,10 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(stock);
         }
 
-        // GET: Users/Delete/5
+        // GET: Stocks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -158,30 +124,30 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (user == null)
+            var stock = await _context.Stock
+                .FirstOrDefaultAsync(m => m.StockID == id);
+            if (stock == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(stock);
         }
 
-        // POST: Users/Delete/5
+        // POST: Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            _context.User.Remove(user);
+            var stock = await _context.Stock.FindAsync(id);
+            _context.Stock.Remove(stock);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool StockExists(int id)
         {
-            return _context.User.Any(e => e.UserID == id);
+            return _context.Stock.Any(e => e.StockID == id);
         }
     }
 }
