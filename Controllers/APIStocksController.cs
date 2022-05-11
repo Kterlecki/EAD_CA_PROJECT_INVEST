@@ -93,6 +93,7 @@ namespace EAD_CA_PROJECT_INVEST.Controllers
             var stock = await _context.Stock.FindAsync(id);
             if (stock == null)
             {
+                Console.WriteLine("Stock value is null for some reason");
                 return NotFound();
             }
 
