@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/ca2invest/databases/CA2invest",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:EAD_CA_PROJECT_INVESTContext"
+    },
+    "mssql2": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/ca2invest/databases/ca2investcontext",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:INVESTContext"
+    }
+  }
+}
