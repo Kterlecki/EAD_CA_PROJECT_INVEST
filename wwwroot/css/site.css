@@ -28,9 +28,12 @@ a {
     margin: 5px 5px 5px 5px;
 }
 
+.h2-margin {
+    margin-top: 10px;
+}
 /*--------------------------------- Privacy details*/
 .card-text {
-    font-weight:bolder;
+    font-weight: bolder;
 }
 
 .bg-image-1 {
