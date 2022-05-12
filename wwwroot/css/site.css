@@ -1,6 +1,6 @@
 html {
-  font-size: 14px;
-  
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -17,16 +17,23 @@ html {
 
 body {
     margin-bottom: 60px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background-color: #E6E6FA;
 }
 a {
     text-decoration: none;
 }
 
+.btn{
+    margin: 5px 5px 5px 5px;
+}
+
+.h2-margin {
+    margin-top: 10px;
+}
 /*--------------------------------- Privacy details*/
 .card-text {
-    font-weight:bolder;
+    font-weight: bolder;
 }
 
 .bg-image-1 {
