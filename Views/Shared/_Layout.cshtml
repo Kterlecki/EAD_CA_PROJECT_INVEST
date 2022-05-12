@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EAD_CA_PROJECT_INVEST.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -49,14 +54,41 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted ">
-        <div class="container text-center">
-            &copy; 2022 - EAD_CA_PROJECT_INVEST - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted  bg-primary ">
+        <div class="container text-center text-light">
+            &copy; 2022 - EAD_CA_PROJECT_INVEST  
+            <div class="col-sm-12 footer-font">
+                <ul class='list-inline social-links'>
+                  <li class='list-inline-item'>
+                    <a target='_blank' href='https://www.facebook.com/'>
+                        <i class='fab fa-facebook' aria-hidden='true'></i>
+                        <span class='sr-only'>Facebook</span>
+                    </a>
+                  </li>
+                  <li class='list-inline-item'>
+                    <a target='_blank' href='https://www.twitter.com/'>
+                        <i class='fab fa-twitter' aria-hidden='true'></i>
+                        <span class='sr-only'>Twitter</span>
+                    </a>
+                  </li>  
+                  <li class='list-inline-item'>
+                    <a target='_blank' href='https://www.Instagram.com'>
+                        <i class='fab fa-instagram' aria-hidden='true'></i>
+                        <span class='sr-only'>Instagram</span>
+                    </a>
+                  </li>
+          
+                </ul>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>.
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
