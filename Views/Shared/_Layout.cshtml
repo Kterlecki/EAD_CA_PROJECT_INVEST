@@ -12,7 +12,11 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EAD_CA_PROJECT_INVEST</a>
+                
+                <div class="navbar-header pull-left">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                <img class= "rounded-circle" src="https://i.pinimg.com/originals/34/dc/b5/34dcb5f1f61385b5d4ae96a01cddcc53.jpg" alt="Site Logo" style="height:75px; width: 75px" /></a>
+            </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
